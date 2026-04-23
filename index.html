@@ -5,949 +5,595 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Семестрове оцінювання · Громадянська освіта · 6 клас</title>
   <style>
-    :root{
-      --bg:#f6f8fb;
-      --card:#ffffff;
-      --text:#17212b;
-      --muted:#637083;
-      --line:#dbe3ee;
-      --blue:#1f5fbf;
-      --blue-2:#2d74dc;
-      --gold:#d9a404;
-      --green:#1f8f4e;
-      --red:#c44141;
-      --shadow:0 12px 32px rgba(19,33,59,.08);
-      --radius:18px;
+    :root {
+      --bg:#f8fafc; --card:#ffffff; --ink:#0f172a; --muted:#64748b; --line:#dbe2ea;
+      --brand:#1d4ed8; --brand2:#2563eb; --accent:#b45309; --ok:#166534; --bad:#b91c1c;
+      --shadow:0 14px 34px rgba(15,23,42,.08); --r:22px;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Segoe UI, Roboto, Arial, sans-serif;
-      background:linear-gradient(180deg,#eef4fb 0%,#f8fafc 100%);
-      color:var(--text);
-      line-height:1.5;
+    * { box-sizing: border-box; }
+    body {
+      margin:0; font-family:Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--ink);
+      line-height:1.55;
     }
-    .app{max-width:1100px;margin:0 auto;padding:20px}
-    .screen{display:none}
-    .screen.active{display:block}
-    .hero,
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
+    .wrap { max-width:1080px; margin:0 auto; padding:22px 16px 48px; }
+    .hero {
+      background:linear-gradient(135deg,#0f172a 0%, #1e3a8a 100%); color:#fff; border-radius:28px; padding:28px 24px;
+      box-shadow:var(--shadow); margin-bottom:20px;
     }
-    .hero{padding:32px;margin-top:18px}
-    h1,h2,h3{margin:0 0 12px}
-    h1{font-size:clamp(26px,4vw,38px)}
-    h2{font-size:clamp(20px,3vw,28px)}
-    p{margin:0 0 10px}
-    .muted{color:var(--muted)}
-    .grid{display:grid;gap:16px}
-    .grid-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-    .info-pill{
-      display:inline-block;
-      padding:6px 12px;
-      border-radius:999px;
-      background:#eef4ff;
-      color:var(--blue);
-      font-weight:700;
-      font-size:13px;
-      margin-bottom:12px;
+    .hero h1 { margin:0 0 8px; font-size:clamp(28px,4vw,40px); line-height:1.15; }
+    .hero p { margin:0; color:#dbeafe; max-width:820px; }
+    .card {
+      background:var(--card); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--shadow);
+      padding:20px;
     }
-    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:18px}
-    .stat{
-      background:#f8fbff;border:1px solid var(--line);border-radius:14px;padding:14px;
+    .hidden { display:none !important; }
+    .grid { display:grid; gap:16px; }
+    .grid-2 { grid-template-columns:1fr 1fr; }
+    @media (max-width:860px) { .grid-2 { grid-template-columns:1fr; } }
+    label { display:block; font-weight:600; margin-bottom:6px; }
+    input, textarea, select {
+      width:100%; padding:12px 14px; border-radius:14px; border:1px solid #cbd5e1; background:#fff;
+      font:inherit;
     }
-    .stat small{display:block;color:var(--muted);margin-bottom:6px}
-    .stat strong{font-size:18px}
-    .form-wrap{display:grid;gap:14px;margin-top:22px}
-    label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
-    input, textarea, select{
-      width:100%;padding:13px 14px;border:1px solid #cbd7e6;border-radius:12px;
-      font-size:15px;background:#fff;color:var(--text);
+    textarea { min-height:140px; resize:vertical; }
+    .btn {
+      border:none; cursor:pointer; border-radius:999px; padding:12px 20px; font-weight:700; font-size:15px;
+      background:var(--brand); color:#fff;
     }
-    textarea{min-height:130px;resize:vertical}
-    .btns{display:flex;gap:12px;flex-wrap:wrap}
-    button{
-      border:none;border-radius:12px;padding:13px 18px;font-size:15px;font-weight:700;cursor:pointer;
-      transition:.18s ease;background:var(--blue);color:#fff;
+    .btn:hover { background:var(--brand2); }
+    .btn.secondary { background:#e2e8f0; color:#0f172a; }
+    .btn.secondary:hover { background:#cbd5e1; }
+    .btn.danger { background:#b91c1c; }
+    .muted { color:var(--muted); }
+    .badge {
+      display:inline-block; padding:5px 10px; border-radius:999px; background:#eff6ff; color:var(--brand);
+      border:1px solid #bfdbfe; font-size:12px; font-weight:700; margin-right:8px;
     }
-    button:hover{background:var(--blue-2)}
-    button.secondary{background:#eef3fa;color:var(--text);border:1px solid var(--line)}
-    button.secondary:hover{background:#e4edf9}
-    button.gold{background:var(--gold);color:#1b1400}
-    button.danger{background:var(--red)}
-    button:disabled{opacity:.55;cursor:not-allowed}
-    .topbar{
-      position:sticky;top:0;z-index:30;background:rgba(246,248,251,.92);backdrop-filter:blur(10px);
-      padding:10px 0 14px;margin-bottom:14px;
+    .topbar {
+      position:sticky; top:0; z-index:10; background:rgba(248,250,252,.92); backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--line); margin:-22px -16px 18px; padding:12px 16px;
     }
-    .topbar-inner{
-      background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);
-      padding:14px 16px;display:grid;gap:12px;
+    .progress-wrap { height:10px; background:#e2e8f0; border-radius:999px; overflow:hidden; }
+    .progress-bar { height:100%; width:0%; background:linear-gradient(90deg,var(--brand),#60a5fa); }
+    .question { margin-bottom:18px; }
+    .question h3 { margin:0 0 8px; font-size:18px; }
+    .option { display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border:1px solid var(--line); border-radius:14px; margin:8px 0; background:#fff; }
+    .option input { width:auto; margin-top:3px; }
+    .footer-actions { display:flex; gap:12px; flex-wrap:wrap; justify-content:space-between; margin-top:20px; }
+    .notice { padding:14px 16px; border-radius:14px; border-left:4px solid var(--brand); background:#eff6ff; color:#1e3a8a; }
+    .warn { padding:14px 16px; border-radius:14px; border-left:4px solid var(--accent); background:#fff7ed; color:#9a3412; }
+    .ok { padding:14px 16px; border-radius:14px; border-left:4px solid var(--ok); background:#ecfdf5; color:#166534; }
+    pre {
+      background:#0f172a; color:#e5eefc; border-radius:16px; padding:14px; overflow:auto; font-size:12px; line-height:1.45;
+      border:1px solid #1e293b;
     }
-    .progress-track{width:100%;height:10px;background:#e8eef7;border-radius:999px;overflow:hidden}
-    .progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--blue),var(--gold));transition:width .25s ease}
-    .topbar-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-    .timer{font-weight:800;color:var(--blue)}
-    .timer.warn{color:var(--gold)}
-    .timer.danger{color:var(--red)}
-    .section-head{margin:18px 0 14px}
-    .question-card{padding:22px;margin-bottom:16px}
-    .q-meta{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
-    .q-text{font-size:17px;font-weight:600;margin-bottom:14px}
-    .options{display:grid;gap:10px}
-    .option{
-      display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:12px;
-      cursor:pointer;background:#fbfdff;
-    }
-    .option:hover{border-color:#adc5ea;background:#f4f9ff}
-    .option input{width:auto;margin-top:3px}
-    .helper{font-size:13px;color:var(--muted);margin-top:8px}
-    .tagline{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-    .tag{
-      padding:4px 9px;border-radius:999px;font-size:12px;font-weight:700;background:#f0f4fa;color:var(--muted)
-    }
-    .nav-row{display:flex;justify-content:space-between;gap:12px;margin:24px 0 8px;flex-wrap:wrap}
-    .result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:20px 0}
-    .result-box{padding:18px;border:1px solid var(--line);border-radius:14px;background:#fbfdff}
-    .result-box small{display:block;color:var(--muted);margin-bottom:6px}
-    .result-box strong{font-size:24px}
-    .success{color:var(--green)}
-    .warning-box{
-      margin-top:14px;padding:14px 16px;border-radius:14px;background:#fff8e8;border:1px solid #f0dfad;color:#6a5210
-    }
-    .error-box{
-      margin-top:14px;padding:14px 16px;border-radius:14px;background:#fff1f1;border:1px solid #efc7c7;color:#8c2f2f
-    }
-    .footer-space{height:24px}
-    .hidden{display:none !important}
-    .mini{font-size:12px;color:var(--muted)}
-    .score-big{font-size:56px;font-weight:800;line-height:1;color:var(--blue)}
-    .center{text-align:center}
-    .divider{height:1px;background:var(--line);margin:18px 0}
-    @media (max-width:640px){
-      .app{padding:12px}
-      .hero,.question-card{padding:18px}
-      .score-big{font-size:42px}
-    }
+    .center { text-align:center; }
   </style>
 </head>
 <body>
-  <div class="app">
-    <div id="screen-start" class="screen active">
-      <div class="hero">
-        <div class="info-pill">ІІ семестр · 6 клас · Громадянська освіта</div>
-        <h1>Семестрове оцінювання<br>«Мистецтво спілкування»</h1>
-        <p class="muted">Інтерактивна робота охоплює теми спілкування, активного слухання, емпатії, мови ворожнечі та аналізу повідомлень у соціальних мережах.</p>
-        <div class="stats">
-          <div class="stat"><small>Формат</small><strong>Автоперевірка + кейси</strong></div>
-          <div class="stat"><small>Оцінювання</small><strong>12-бальна система</strong></div>
-          <div class="stat"><small>Групи результатів</small><strong>ГР1 · ГР2 · ГР3</strong></div>
-          <div class="stat"><small>Спроба</small><strong>1 спроба</strong></div>
-          <div class="stat"><small>Час</small><strong>35 хвилин</strong></div>
-        </div>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Семестрове оцінювання</h1>
+      <p>Громадянська освіта · 6 клас · ІІ семестр · Розділ «Мистецтво спілкування»</p>
+    </section>
 
-        <div class="warning-box">
-          <strong>Важливо:</strong> після завершення результат автоматично готується для надсилання в систему. Учень бачить лише загальний підсумковий бал. Деталізація ГР1 / ГР2 / ГР3 призначена для вчителя.
+    <section id="screen-start" class="card">
+      <div class="grid grid-2">
+        <div>
+          <label for="studentName">Прізвище та ім’я</label>
+          <input id="studentName" type="text" placeholder="Наприклад: Іваненко Марія" />
         </div>
-
-        <div class="form-wrap">
-          <div class="grid grid-2">
-            <div>
-              <label for="studentName">Прізвище та ім’я</label>
-              <input id="studentName" type="text" maxlength="80" placeholder="Наприклад: Іваненко Марія" />
-            </div>
-            <div>
-              <label for="studentClass">Клас</label>
-              <input id="studentClass" type="text" maxlength="20" placeholder="Наприклад: 6-А" />
-            </div>
-          </div>
-          <div>
-            <label for="accessCode">Код доступу</label>
-            <input id="accessCode" type="password" maxlength="40" placeholder="Введіть код доступу" />
-          </div>
-          <div class="btns">
-            <button id="startBtn">Почати роботу</button>
-            <button class="secondary" id="restoreBtn">Відновити чернетку</button>
-            <button class="secondary" id="resetDraftBtn">Скинути чернетку</button>
-          </div>
-          <div id="startMessage" class="mini"></div>
+        <div>
+          <label for="studentClass">Клас</label>
+          <input id="studentClass" type="text" placeholder="Наприклад: 6-А" />
         </div>
       </div>
-    </div>
+      <div class="grid grid-2" style="margin-top:14px;">
+        <div>
+          <label for="accessCode">Код доступу</label>
+          <input id="accessCode" type="password" placeholder="Введіть код доступу" />
+        </div>
+        <div>
+          <label>Інформація</label>
+          <div class="notice">
+            <div><strong>Час виконання:</strong> 35 хвилин</div>
+            <div><strong>Спроб:</strong> 1</div>
+            <div><strong>Результат:</strong> автоматично надсилається вчителю</div>
+          </div>
+        </div>
+      </div>
+      <div id="startError" class="warn hidden" style="margin-top:14px;"></div>
+      <div class="footer-actions">
+        <span class="muted">Репозиторій: <strong>6klexternGrO</strong> · Домен: <strong>6klexternGrO.dvdavydenko.space</strong></span>
+        <button class="btn" id="startBtn">Почати роботу</button>
+      </div>
+    </section>
 
-    <div id="screen-quiz" class="screen">
+    <section id="screen-quiz" class="hidden">
       <div class="topbar">
-        <div class="topbar-inner">
-          <div class="topbar-row">
-            <div>
-              <strong id="studentLabel">Учень</strong>
-              <div class="mini" id="sectionLabel">Розділ</div>
-            </div>
-            <div class="timer" id="timerLabel">35:00</div>
+        <div class="grid grid-2" style="align-items:center;">
+          <div>
+            <div><strong id="studentInfo"></strong></div>
+            <div class="muted">Працюйте уважно. Після завершення буде показано лише загальний бал.</div>
           </div>
-          <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
-          <div class="topbar-row mini">
-            <span id="progressText">0%</span>
-            <span id="autosaveText">Чернетка не збережена</span>
+          <div class="center">
+            <span class="badge">⏱ <span id="timerLabel">35:00</span></span>
+            <span class="badge">📍 <span id="progressLabel">0%</span></span>
           </div>
+        </div>
+        <div class="progress-wrap" style="margin-top:10px;">
+          <div class="progress-bar" id="progressBar"></div>
         </div>
       </div>
 
-      <div id="quizContainer"></div>
-
-      <div class="nav-row">
-        <button class="secondary" id="prevBtn">← Назад</button>
-        <div class="btns">
-          <button class="secondary" id="saveBtn">Зберегти чернетку</button>
-          <button id="nextBtn">Далі →</button>
-          <button class="gold hidden" id="submitBtn">Завершити роботу</button>
+      <div class="card">
+        <div id="quizContainer"></div>
+        <div class="footer-actions">
+          <button class="btn secondary" id="saveBtn">Зберегти локально</button>
+          <button class="btn danger" id="submitBtn">Завершити роботу</button>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div id="screen-result" class="screen">
-      <div class="hero center">
-        <div class="info-pill">Результат роботи</div>
-        <h2 id="resultTitle">Роботу завершено</h2>
-        <div class="score-big" id="finalGrade">—</div>
-        <p class="muted">з 12 балів</p>
-        <p id="resultComment"></p>
-
-        <div class="result-grid">
-          <div class="result-box">
-            <small>Сирий бал</small>
-            <strong id="rawScoreBox">—</strong>
-          </div>
-          <div class="result-box">
-            <small>Час виконання</small>
-            <strong id="durationBox">—</strong>
-          </div>
-          <div class="result-box">
-            <small>Статус відправки</small>
-            <strong id="submitStatusBox">—</strong>
-          </div>
-        </div>
-
-        <div class="warning-box" id="studentFinalNote">
-          Результат збережено. Очікуйте підсумок у журналі від учителя.
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="card" style="padding:18px;text-align:left;max-width:880px;margin:0 auto;">
-          <h3>Технічний JSON для інтеграції з GAS</h3>
-          <p class="muted">Цей блок потрібний для тестування інтеграції. У бойовій версії його можна приховати від учня.</p>
-          <textarea id="resultJsonPreview" style="min-height:260px;font-family:Consolas, monospace;"></textarea>
-          <div class="btns" style="margin-top:12px;">
-            <button id="copyJsonBtn" class="secondary">Скопіювати JSON</button>
-            <button id="restartBtn" class="secondary">Повернутися на старт</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-space"></div>
+    <section id="screen-final" class="card hidden">
+      <div id="finalBox" class="ok"></div>
+      <h3>Службовий пакет результату</h3>
+      <pre id="resultJson"></pre>
+    </section>
   </div>
 
   <script>
     const APP_CONFIG = {
-      appTitle: 'Семестрове оцінювання з громадянської освіти',
-      subject: 'Громадянська освіта',
-      grade: '6 клас',
-      semester: 'ІІ семестр',
-      topic: 'Мистецтво спілкування',
+      appTitle: "Семестрове оцінювання з громадянської освіти",
+      subject: "Громадянська освіта",
+      grade: "6 клас",
+      semester: "ІІ семестр",
+      topic: "Мистецтво спілкування",
       timeLimitMinutes: 35,
       attemptsAllowed: 1,
       showStudentOnlyTotal: true,
       sendTelegramReport: true,
-      gasEndpoint: 'https://script.google.com/macros/s/ВАШ_GAS_URL/exec',
-      accessCodeDemo: 'CIVIC6SPRING',
-      workId: 'civic6-semester-communication-2026',
-      gradingScale: [
-        {min:0,max:3,grade:1},{min:4,max:6,grade:2},{min:7,max:9,grade:3},{min:10,max:12,grade:4},
-        {min:13,max:15,grade:5},{min:16,max:18,grade:6},{min:19,max:22,grade:7},{min:23,max:26,grade:8},
-        {min:27,max:30,grade:9},{min:31,max:34,grade:10},{min:35,max:37,grade:11},{min:38,max:39,grade:12}
+      gasEndpoint: "https://script.google.com/macros/s/AKfycbwBsGy1kiyZ9dgESa0qwXeeR6h15Fu7fwpBpiAFwnpVCuDnMVai-BiabKM6lINQ7Nli/exec",
+      repoName: "6klexternGrO",
+      domainName: "6klexternGrO.dvdavydenko.space",
+      storageKey: "civic6-semester-app-state-v1"
+    };
+
+    const QUESTION_BANK = {
+      questions: [
+        { id:"A1", type:"mcq", groupResults:["GR3"], points:1, prompt:"Який стиль спілкування найкраще допомагає висловити свою думку без образ і тиску на інших?", options:["Пасивний","Агресивний","Асертивний","Замкнений"], correctAnswer:2 },
+        { id:"A2", type:"mcq", groupResults:["GR1"], points:1, prompt:"Що належить до невербального спілкування?", options:["Листування в чаті","Усна відповідь на уроці","Жести, міміка, поза","Повідомлення в електронній пошті"], correctAnswer:2 },
+        { id:"A3", type:"mcq", groupResults:["GR3"], points:1, prompt:"Яке запитання є відкритим?", options:["Тобі 12 років?","Ти любиш спорт?","Як ти зазвичай проводиш вільний час?","Ти був сьогодні в школі?"], correctAnswer:2 },
+        { id:"A4", type:"mcq", groupResults:["GR3"], points:1, prompt:"Що означає активне слухання?", options:["Перебивати співрозмовника","Уважно слухати, перепитувати й показувати, що ти розумієш людину","Мовчати і не реагувати","Слухати тільки те, що цікаво"], correctAnswer:1 },
+        { id:"A5", type:"mcq", groupResults:["GR2"], points:1, prompt:"Що таке мова ворожнечі?", options:["Будь-яка емоційна розмова","Висловлювання, що принижують або розпалюють ненависть до людини чи групи","Критика чужої думки","Суперечка між друзями"], correctAnswer:1 },
+        { id:"A6", type:"mcq", groupResults:["GR1"], points:1, prompt:"Чому державна мова важлива для суспільної комунікації?", options:["Нею можна користуватися лише в школі","Вона об’єднує громадян у спільному публічному просторі","Вона потрібна тільки в документах","Нею мають говорити лише дорослі"], correctAnswer:1 },
+        { id:"A7", type:"mcq", groupResults:["GR3"], points:1, prompt:"Яка поведінка найбільше допомагає уникнути конфлікту?", options:["Говорити образливо","Ігнорувати почуття співрозмовника","Спокійно пояснити свою думку і вислухати іншу сторону","Завжди погоджуватися"], correctAnswer:2 },
+        { id:"A8", type:"mcq", groupResults:["GR3"], points:1, prompt:"Що найкраще показує емпатію?", options:["Мене це не стосується","Сам винен","Я бачу, що тобі важко, давай спробую зрозуміти","Не перебільшуй"], correctAnswer:2 },
+
+        { id:"B1", type:"matching", groupResults:["GR3"], points:3, prompt:"Установіть відповідність між стилем спілкування та його ознакою.", leftItems:["Пасивний","Агресивний","Асертивний"], rightItems:["Людина поважає і себе, і співрозмовника","Людина боїться висловити свою думку","Людина тисне, ображає або принижує інших"], correctPairs:{"0":1,"1":2,"2":0} },
+        { id:"B2", type:"matching", groupResults:["GR1"], points:4, prompt:"Установіть відповідність між прикладом і видом спілкування.", leftItems:["Усна розмова","Усмішка","Повідомлення в месенджері","Піднятий великий палець"], rightItems:["Вербальне","Невербальне"], correctPairs:{"0":0,"1":1,"2":0,"3":1} },
+        { id:"B3", type:"matching", groupResults:["GR2"], points:4, prompt:"Установіть відповідність між прикладом і типом комунікації.", leftItems:["Є факти і джерело","Є образи цілої групи","Є спокійний аналіз без приниження","Є заклики насміхатися з інших"], rightItems:["Безпечна комунікація","Мова ворожнечі / ризикований контент"], correctPairs:{"0":0,"1":1,"2":0,"3":1} },
+
+        { id:"C1", type:"open", groupResults:["GR3"], maxPoints:2, minLength:80, prompt:"Поясніть, чим асертивна поведінка відрізняється від агресивної.", keywordRules:[["асертив","спок","впев"],["поваг","без образ"],["агрес","тиск","крик","образ","приниж"]] },
+        { id:"C2", type:"open", groupResults:["GR1","GR3"], maxPoints:2, minLength:60, prompt:"Наведіть два приклади, як жести або міміка можуть допомогти порозумінню.", keywordRules:[["усміш","кив","погляд","мім","жест"],["уваг","поваг","доброзич","слух"]] },
+        { id:"C3", type:"open", groupResults:["GR3"], maxPoints:3, minLength:60, prompt:"Сформулюйте три відкриті запитання для знайомства з новою людиною.", patternRules:{minQuestions:3, starters:["як","чому","розкаж"]} },
+        { id:"C4", type:"open", groupResults:["GR2","GR3"], maxPoints:2, minLength:70, prompt:"Чому мова ворожнечі шкодить суспільству? Назвіть дві причини.", keywordRules:[["приниж","образ"],["ненавист","ворож"],["конфлікт","недовір","напруг","небезп","дискрим"]] },
+        { id:"C5", type:"open", groupResults:["GR3"], maxPoints:2, minLength:60, prompt:"Поясніть, як емпатія допомагає уникати конфліктів.", keywordRules:[["розум","почут","емоці"],["поваг","спок"],["домов","уник","порозум"]] },
+
+        { id:"D1", type:"practical", groupResults:["GR1","GR3"], maxPoints:4, minLength:120, prompt:"Уявіть, що ваш клас — це маленька держава. Запишіть 5 правил громадянської поведінки за формулою: «Ми маємо право на..., але водночас зобов’язані...»", rules:{minItems:5, mustContainPattern:["маємо право","зобов"], keywords:["повага","безпека","слухати","допомога","не ображати","співпраця"]} },
+        { id:"D2", type:"practical", groupResults:["GR2","GR3"], maxPoints:4, minLength:140, prompt:"Оберіть допис у соціальних мережах і проаналізуйте його: чи є факти, чи лише думки, чи є маніпуляція, чи є мова ворожнечі, який ваш висновок.", rules:{mustCover:["факт","думк","маніпуляц","ворож","виснов"], keywords:["джерело","перевір","не поширювати","образ","емоційний тиск","узагальнення"]} },
+        { id:"D3", type:"practical", groupResults:["GR3"], maxPoints:3, minLength:90, prompt:"Складіть пам’ятку «Золоті правила крутого співрозмовника» (6–8 правил).", rules:{minItems:6, keywords:["слух","не перебивай","відкрит","спок","повага","ввіч","без образ"]} },
+        { id:"D4", type:"practical", groupResults:["GR3"], maxPoints:3, minLength:80, prompt:"Запишіть 6 фраз для «Словника емпатії», які допомагають підтримати людину.", rules:{minItems:6, keywords:["слухаю","розумію","допом","розкаж","почуття","разом","підтр"]} }
       ]
     };
 
-    const QUESTION_BANK = [
-      {
-        id:'A1', type:'mcq', groupResults:['GR3'], points:1,
-        title:'Тест 1',
-        prompt:'Який стиль спілкування найкраще допомагає висловити свою думку без образ і тиску на інших?',
-        options:['Пасивний','Агресивний','Асертивний','Замкнений'], correctAnswer:2
-      },
-      {
-        id:'A2', type:'mcq', groupResults:['GR1'], points:1,
-        title:'Тест 2',
-        prompt:'Що належить до невербального спілкування?',
-        options:['Листування в чаті','Усна відповідь на уроці','Жести, міміка, поза','Повідомлення в електронній пошті'], correctAnswer:2
-      },
-      {
-        id:'A3', type:'mcq', groupResults:['GR3'], points:1,
-        title:'Тест 3',
-        prompt:'Яке запитання є відкритим?',
-        options:['Тобі 12 років?','Ти любиш спорт?','Як ти зазвичай проводиш вільний час?','Ти був сьогодні в школі?'], correctAnswer:2
-      },
-      {
-        id:'A4', type:'mcq', groupResults:['GR3'], points:1,
-        title:'Тест 4',
-        prompt:'Що означає активне слухання?',
-        options:['Перебивати співрозмовника, щоб швидше дати пораду','Уважно слухати, перепитувати й показувати, що ти розумієш людину','Мовчати і не реагувати','Слухати тільки те, що тобі цікаво'], correctAnswer:1
-      },
-      {
-        id:'A5', type:'mcq', groupResults:['GR2'], points:1,
-        title:'Тест 5',
-        prompt:'Що таке мова ворожнечі?',
-        options:['Будь-яка емоційна розмова','Висловлювання, що принижують або розпалюють ненависть до людини чи групи','Критика чужої думки','Суперечка між друзями'], correctAnswer:1
-      },
-      {
-        id:'A6', type:'mcq', groupResults:['GR1'], points:1,
-        title:'Тест 6',
-        prompt:'Чому державна мова важлива для суспільної комунікації?',
-        options:['Бо нею можна користуватися лише в школі','Бо вона об’єднує громадян у спільному публічному просторі','Бо вона потрібна тільки в офіційних документах','Бо нею мають говорити лише дорослі'], correctAnswer:1
-      },
-      {
-        id:'A7', type:'mcq', groupResults:['GR3'], points:1,
-        title:'Тест 7',
-        prompt:'Яка поведінка найбільше допомагає уникнути конфлікту?',
-        options:['Говорити образливо, якщо тебе не зрозуміли','Ігнорувати почуття співрозмовника','Спокійно пояснити свою думку і вислухати іншу сторону','Завжди погоджуватися, навіть якщо тобі неприємно'], correctAnswer:2
-      },
-      {
-        id:'A8', type:'mcq', groupResults:['GR3'], points:1,
-        title:'Тест 8',
-        prompt:'Що найкраще показує емпатію?',
-        options:['Мене це не стосується','Сам винен','Я бачу, що тобі важко, давай спробую зрозуміти','Не перебільшуй'], correctAnswer:2
-      },
-      {
-        id:'B1', type:'matching', groupResults:['GR3'], points:3,
-        title:'Відповідність 1',
-        prompt:'Установіть відповідність між стилем спілкування та його ознакою.',
-        leftItems:['Пасивний','Агресивний','Асертивний'],
-        rightItems:['Людина поважає і себе, і співрозмовника','Людина боїться висловити свою думку','Людина тисне, ображає або принижує інших'],
-        correctPairs:{0:1,1:2,2:0}
-      },
-      {
-        id:'B2', type:'matching', groupResults:['GR1'], points:4,
-        title:'Відповідність 2',
-        prompt:'Установіть відповідність між прикладом і видом спілкування.',
-        leftItems:['Усна розмова','Усмішка','Повідомлення в месенджері','Піднятий великий палець'],
-        rightItems:['Вербальне','Невербальне'],
-        correctPairs:{0:0,1:1,2:0,3:1}
-      },
-      {
-        id:'B3', type:'matching', groupResults:['GR2'], points:4,
-        title:'Відповідність 3',
-        prompt:'Установіть відповідність між ознакою повідомлення та типом комунікації.',
-        leftItems:['Є факти і посилання на джерело','Є образи цілої групи людей','Є спокійний аналіз без приниження','Є заклики насміхатися з інших'],
-        rightItems:['Безпечна комунікація','Мова ворожнечі / ризикований контент'],
-        correctPairs:{0:0,1:1,2:0,3:1}
-      },
-      {
-        id:'C1', type:'open', groupResults:['GR3'], maxPoints:2,
-        title:'Коротка відповідь 1',
-        prompt:'Поясніть, чим асертивна поведінка відрізняється від агресивної.',
-        minLength:100,
-        keywordRules:[['асертив','спок','впев'],['поваг','без образ','не приниж'],['агрес','тиск','крик','образ','приниж']]
-      },
-      {
-        id:'C2', type:'open', groupResults:['GR1','GR3'], maxPoints:2,
-        title:'Коротка відповідь 2',
-        prompt:'Наведіть два приклади, як жести або міміка можуть допомогти порозумінню.',
-        minLength:80,
-        keywordRules:[['усміш','кивок','погляд','мімік','жест'],['уваг','поваг','доброзич','слух']]
-      },
-      {
-        id:'C3', type:'open_pattern', groupResults:['GR3'], maxPoints:3,
-        title:'Коротка відповідь 3',
-        prompt:'Сформулюйте три відкриті запитання для знайомства з новою людиною. Кожне запишіть з нового рядка.',
-        minLength:40,
-        openQuestionStarters:['як','чому','розкажи']
-      },
-      {
-        id:'C4', type:'open', groupResults:['GR2','GR3'], maxPoints:2,
-        title:'Коротка відповідь 4',
-        prompt:'Чому мова ворожнечі шкодить суспільству? Назвіть дві причини.',
-        minLength:80,
-        keywordRules:[['приниж','образ'],['ненавис','ворожнеч'],['конфлікт','недовір','напруг','небезпек','дискримінац']]
-      },
-      {
-        id:'C5', type:'open', groupResults:['GR3'], maxPoints:2,
-        title:'Коротка відповідь 5',
-        prompt:'Поясніть, як емпатія допомагає уникати конфліктів.',
-        minLength:80,
-        keywordRules:[['емоці','почут'],['поваг','спок'],['домов','уникнути конфлікт','порозум']]
-      },
-      {
-        id:'D1', type:'practical', groupResults:['GR1','GR3'], maxPoints:4,
-        title:'Практичне завдання 1',
-        prompt:'«Конституція класу». Уявіть, що ваш клас — це маленька держава. Запишіть 5 правил громадянської поведінки за формулою: «Ми маємо право на..., але водночас зобов’язані...» Кожне правило — з нового рядка.',
-        minLength:180,
-        practicalRules:{minItems:5,mustContain:['маємо право','зобов'],keywords:['повага','безпека','слухати','допомога','не ображати','співпраця']}
-      },
-      {
-        id:'D2', type:'practical', groupResults:['GR2','GR3'], maxPoints:4,
-        title:'Практичне завдання 2',
-        prompt:'«Аналіз медіа». Оберіть будь-який допис у соціальних мережах і проаналізуйте його: 1) чи є там факти чи лише думки; 2) чи є ознаки маніпуляції; 3) чи є мова ворожнечі; 4) який висновок зробите як відповідальний читач?',
-        minLength:220,
-        practicalRules:{mustCover:['факт','думк','маніпуляц','ворожнеч','виснов'],keywords:['джерело','перевір','не поширювати','образ','емоційний тиск','узагальнення']}
-      },
-      {
-        id:'D3', type:'practical', groupResults:['GR3'], maxPoints:3,
-        title:'Практичне завдання 3',
-        prompt:'«Золоті правила крутого співрозмовника». Складіть пам’ятку з 6–8 правил. Кожне правило — з нового рядка.',
-        minLength:120,
-        practicalRules:{minItems:6,keywords:['слух','не перебивай','відкрит','спок','поваг','ввіч','без образ']}
-      },
-      {
-        id:'D4', type:'practical', groupResults:['GR3'], maxPoints:3,
-        title:'Практичне завдання 4',
-        prompt:'«Словник емпатії». Запишіть 6 фраз, які допомагають підтримати людину в розмові. Кожна фраза — з нового рядка.',
-        minLength:80,
-        practicalRules:{minItems:6,keywords:['слухаю','розумію','допом','розкажи','почут','разом','підтр']}
-      }
-    ];
-
     const STATE = {
-      studentName:'',
-      studentClass:'',
-      accessCode:'',
-      variant:'main',
-      startedAt:null,
-      submittedAt:null,
-      currentIndex:0,
-      answers:{},
-      rawScores:{total:0,GR1:0,GR2:0,GR3:0},
-      maxScores:{total:39,GR1:0,GR2:0,GR3:0},
-      grades12:{total:0,GR1:0,GR2:0,GR3:0},
-      integrity:{riskLevel:'low',flags:[]},
-      submissionStatus:'draft',
-      timerLeftSec:APP_CONFIG.timeLimitMinutes * 60,
-      timerInterval:null,
-      lastAutosaveAt:null,
-      resultObject:null
+      studentName: "",
+      studentClass: "",
+      accessCode: "",
+      startedAt: null,
+      submittedAt: null,
+      answers: {},
+      timerLeftSec: APP_CONFIG.timeLimitMinutes * 60,
+      intervalId: null
     };
 
-    const DOM = {
-      screens:{
-        start:document.getElementById('screen-start'),
-        quiz:document.getElementById('screen-quiz'),
-        result:document.getElementById('screen-result')
-      },
-      studentName:document.getElementById('studentName'),
-      studentClass:document.getElementById('studentClass'),
-      accessCode:document.getElementById('accessCode'),
-      startBtn:document.getElementById('startBtn'),
-      restoreBtn:document.getElementById('restoreBtn'),
-      resetDraftBtn:document.getElementById('resetDraftBtn'),
-      startMessage:document.getElementById('startMessage'),
-      quizContainer:document.getElementById('quizContainer'),
-      prevBtn:document.getElementById('prevBtn'),
-      nextBtn:document.getElementById('nextBtn'),
-      submitBtn:document.getElementById('submitBtn'),
-      saveBtn:document.getElementById('saveBtn'),
-      progressBar:document.getElementById('progressBar'),
-      progressText:document.getElementById('progressText'),
-      autosaveText:document.getElementById('autosaveText'),
-      timerLabel:document.getElementById('timerLabel'),
-      studentLabel:document.getElementById('studentLabel'),
-      sectionLabel:document.getElementById('sectionLabel'),
-      finalGrade:document.getElementById('finalGrade'),
-      resultComment:document.getElementById('resultComment'),
-      rawScoreBox:document.getElementById('rawScoreBox'),
-      durationBox:document.getElementById('durationBox'),
-      submitStatusBox:document.getElementById('submitStatusBox'),
-      resultJsonPreview:document.getElementById('resultJsonPreview'),
-      copyJsonBtn:document.getElementById('copyJsonBtn'),
-      restartBtn:document.getElementById('restartBtn'),
-      resultTitle:document.getElementById('resultTitle')
-    };
+    function qs(id) { return document.getElementById(id); }
+    function safeText(v) { return (v ?? "").toString(); }
 
-    function normalizeText(str=''){
-      return String(str).toLowerCase().trim().replace(/\s+/g,' ');
+    function saveState() {
+      localStorage.setItem(APP_CONFIG.storageKey, JSON.stringify(STATE));
     }
 
-    function normalizeStudentKey(name, className){
-      return `${normalizeText(name)}::${normalizeText(className)}`;
+    function restoreState() {
+      try {
+        const raw = localStorage.getItem(APP_CONFIG.storageKey);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        Object.assign(STATE, parsed);
+      } catch (e) {}
     }
 
-    function showScreen(name){
-      Object.values(DOM.screens).forEach(s=>s.classList.remove('active'));
-      DOM.screens[name].classList.add('active');
-      window.scrollTo({top:0,behavior:'smooth'});
+    function clearSavedState() {
+      localStorage.removeItem(APP_CONFIG.storageKey);
     }
 
-    function getQuestionMaxPoints(q){
-      if(q.type === 'mcq' || q.type === 'matching') return q.points;
-      return q.maxPoints;
+    function normalizeStudentKey(name, className) {
+      return `${safeText(name).toLowerCase().trim().replace(/\s+/g,' ')}::${safeText(className).toLowerCase().trim().replace(/\s+/g,' ')}`;
     }
 
-    function calculateMaxScores(){
-      const totals = {total:0,GR1:0,GR2:0,GR3:0};
-      QUESTION_BANK.forEach(q=>{
-        const max = getQuestionMaxPoints(q);
-        totals.total += max;
-        q.groupResults.forEach(gr=> totals[gr] += max);
+    async function apiCall(action, payload) {
+      const response = await fetch(APP_CONFIG.gasEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action, payload })
       });
-      STATE.maxScores = totals;
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      return await response.json();
     }
 
-    function renderCurrentQuestion(){
-      const q = QUESTION_BANK[STATE.currentIndex];
-      const total = QUESTION_BANK.length;
-      const answeredCount = Object.keys(STATE.answers).length;
-      DOM.studentLabel.textContent = `${STATE.studentName} · ${STATE.studentClass}`;
-      DOM.sectionLabel.textContent = `${q.title} · Завдання ${STATE.currentIndex + 1} з ${total}`;
-      const progress = Math.round((STATE.currentIndex / (total - 1 || 1)) * 100);
-      DOM.progressBar.style.width = `${Math.max(4, progress)}%`;
-      DOM.progressText.textContent = `Заповнено відповідей: ${answeredCount} / ${total}`;
-
-      let html = `<div class="section-head"><div class="info-pill">${APP_CONFIG.topic}</div><h2>${q.title}</h2><p class="muted">${q.type === 'mcq' ? 'Оберіть одну правильну відповідь.' : q.type === 'matching' ? 'Установіть відповідності.' : 'Дайте письмову відповідь.'}</p></div>`;
-      html += `<div class="card question-card">`;
-      html += `<div class="q-meta">${q.id}</div>`;
-      html += `<div class="q-text">${escapeHtml(q.prompt)}</div>`;
-      html += `<div class="tagline">${q.groupResults.map(gr=>`<span class="tag">${gr}</span>`).join('')}<span class="tag">Макс. ${getQuestionMaxPoints(q)} б.</span></div>`;
-
-      if(q.type === 'mcq'){
-        html += `<div class="options" style="margin-top:16px;">`;
-        const saved = STATE.answers[q.id];
-        q.options.forEach((opt, idx)=>{
-          const checked = saved === idx ? 'checked' : '';
-          html += `<label class="option"><input type="radio" name="${q.id}" value="${idx}" ${checked}><span>${escapeHtml(opt)}</span></label>`;
-        });
-        html += `</div>`;
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
       }
+      return a;
+    }
 
-      if(q.type === 'matching'){
-        const saved = STATE.answers[q.id] || {};
-        html += `<div style="margin-top:16px;display:grid;gap:12px;">`;
-        q.leftItems.forEach((item, idx)=>{
-          html += `<div class="grid grid-2" style="align-items:center;gap:10px;">
-            <div class="option" style="cursor:default">${idx+1}. ${escapeHtml(item)}</div>
-            <div>
-              <select data-match-left="${idx}">
-                <option value="">Оберіть відповідь</option>
-                ${q.rightItems.map((rightOpt,rIdx)=>`<option value="${rIdx}" ${String(saved[idx])===String(rIdx)?'selected':''}>${escapeHtml(rightOpt)}</option>`).join('')}
+    function renderQuiz() {
+      const container = qs('quizContainer');
+      container.innerHTML = '';
+      QUESTION_BANK.questions.forEach((q, index) => {
+        const block = document.createElement('div');
+        block.className = 'question';
+        const title = document.createElement('h3');
+        title.textContent = `${index+1}. ${q.prompt}`;
+        block.appendChild(title);
+
+        if (q.type === 'mcq') {
+          q.options.forEach((opt, i) => {
+            const row = document.createElement('label');
+            row.className = 'option';
+            row.innerHTML = `<input type="radio" name="${q.id}" value="${i}" ${STATE.answers[q.id] == i ? 'checked' : ''}><span>${opt}</span>`;
+            row.querySelector('input').addEventListener('change', (e) => {
+              STATE.answers[q.id] = Number(e.target.value);
+              updateProgress();
+              saveState();
+            });
+            block.appendChild(row);
+          });
+        }
+
+        if (q.type === 'matching') {
+          q.leftItems.forEach((item, idx) => {
+            const wrap = document.createElement('div');
+            wrap.style.margin = '10px 0';
+            const saved = STATE.answers[q.id]?.[idx] ?? "";
+            wrap.innerHTML = `
+              <label>${item}</label>
+              <select data-qid="${q.id}" data-idx="${idx}">
+                <option value="">Оберіть варіант</option>
+                ${q.rightItems.map((r, i) => `<option value="${i}" ${String(saved)===String(i)?'selected':''}>${r}</option>`).join('')}
               </select>
-            </div>
-          </div>`;
+            `;
+            wrap.querySelector('select').addEventListener('change', (e) => {
+              if (!STATE.answers[q.id]) STATE.answers[q.id] = {};
+              STATE.answers[q.id][idx] = Number(e.target.value);
+              updateProgress();
+              saveState();
+            });
+            block.appendChild(wrap);
+          });
+        }
+
+        if (q.type === 'open' || q.type === 'practical') {
+          const ta = document.createElement('textarea');
+          ta.placeholder = 'Введіть відповідь...';
+          ta.value = STATE.answers[q.id] || '';
+          ta.addEventListener('input', (e) => {
+            STATE.answers[q.id] = e.target.value;
+            updateProgress();
+            saveState();
+          });
+          block.appendChild(ta);
+          const note = document.createElement('div');
+          note.className = 'muted';
+          note.style.marginTop = '6px';
+          note.textContent = `Мінімальна рекомендована довжина: ${q.minLength || 0} символів`;
+          block.appendChild(note);
+        }
+
+        container.appendChild(block);
+      });
+    }
+
+    function answeredCount() {
+      let c = 0;
+      QUESTION_BANK.questions.forEach(q => {
+        const a = STATE.answers[q.id];
+        if (q.type === 'mcq' && (a === 0 || !!a)) c++;
+        else if (q.type === 'matching' && a && Object.keys(a).length) c++;
+        else if ((q.type === 'open' || q.type === 'practical') && safeText(a).trim()) c++;
+      });
+      return c;
+    }
+
+    function updateProgress() {
+      const total = QUESTION_BANK.questions.length;
+      const done = answeredCount();
+      const pct = Math.round(done / total * 100);
+      qs('progressBar').style.width = pct + '%';
+      qs('progressLabel').textContent = pct + '%';
+    }
+
+    function startTimer() {
+      if (STATE.intervalId) clearInterval(STATE.intervalId);
+      STATE.intervalId = setInterval(() => {
+        STATE.timerLeftSec--;
+        const min = String(Math.floor(STATE.timerLeftSec / 60)).padStart(2, '0');
+        const sec = String(STATE.timerLeftSec % 60).padStart(2, '0');
+        qs('timerLabel').textContent = `${min}:${sec}`;
+        saveState();
+        if (STATE.timerLeftSec <= 0) {
+          clearInterval(STATE.intervalId);
+          finalizeQuiz(true);
+        }
+      }, 1000);
+    }
+
+    function scoreMCQ(q, answer) {
+      return Number(answer) === Number(q.correctAnswer) ? q.points : 0;
+    }
+
+    function scoreMatching(q, answer) {
+      if (!answer || typeof answer !== 'object') return 0;
+      const keys = Object.keys(q.correctPairs);
+      let correct = 0;
+      keys.forEach(k => {
+        if (String(answer[k]) === String(q.correctPairs[k])) correct++;
+      });
+      return (correct / keys.length) * q.points;
+    }
+
+    function includesAny(text, variants) {
+      const t = safeText(text).toLowerCase();
+      return variants.some(v => t.includes(v));
+    }
+
+    function scoreOpen(q, answer) {
+      const text = safeText(answer).trim().toLowerCase();
+      if (!text) return 0;
+
+      if (q.patternRules) {
+        const lines = text.split(/\n+/).map(x => x.trim()).filter(Boolean);
+        let count = 0;
+        lines.forEach(line => {
+          if (q.patternRules.starters.some(s => line.startsWith(s))) count++;
         });
-        html += `</div>`;
+        if (count >= q.patternRules.minQuestions) return q.maxPoints;
+        if (count >= 2) return Math.max(1, q.maxPoints - 1);
+        return 1;
       }
 
-      if(q.type === 'open' || q.type === 'open_pattern' || q.type === 'practical'){
-        const saved = STATE.answers[q.id] || '';
-        html += `<div style="margin-top:16px;">
-          <textarea id="answerTextarea" placeholder="Введіть вашу відповідь...">${escapeHtml(saved)}</textarea>
-          <div class="helper">Мінімальна рекомендована довжина: ${q.minLength || 0} символів.</div>
-        </div>`;
-      }
-
-      html += `</div>`;
-      DOM.quizContainer.innerHTML = html;
-      DOM.prevBtn.disabled = STATE.currentIndex === 0;
-      const isLast = STATE.currentIndex === QUESTION_BANK.length - 1;
-      DOM.nextBtn.classList.toggle('hidden', isLast);
-      DOM.submitBtn.classList.toggle('hidden', !isLast);
-    }
-
-    function escapeHtml(str=''){
-      return String(str)
-        .replace(/&/g,'&amp;')
-        .replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;')
-        .replace(/"/g,'&quot;')
-        .replace(/'/g,'&#039;');
-    }
-
-    function collectCurrentAnswer(){
-      const q = QUESTION_BANK[STATE.currentIndex];
-      if(!q) return;
-      if(q.type === 'mcq'){
-        const checked = document.querySelector(`input[name="${q.id}"]:checked`);
-        if(checked) STATE.answers[q.id] = Number(checked.value);
-      }
-      if(q.type === 'matching'){
-        const selects = document.querySelectorAll('[data-match-left]');
-        const obj = {};
-        selects.forEach(sel=>{
-          const leftIdx = sel.getAttribute('data-match-left');
-          if(sel.value !== '') obj[leftIdx] = Number(sel.value);
-        });
-        STATE.answers[q.id] = obj;
-      }
-      if(q.type === 'open' || q.type === 'open_pattern' || q.type === 'practical'){
-        const val = document.getElementById('answerTextarea')?.value || '';
-        STATE.answers[q.id] = val.trim();
-      }
-    }
-
-    function scoreMCQ(q, answer){
-      return answer === q.correctAnswer ? q.points : 0;
-    }
-
-    function scoreMatching(q, answer){
-      if(!answer || typeof answer !== 'object') return 0;
-      const totalPairs = Object.keys(q.correctPairs).length;
-      let correctCount = 0;
-      Object.entries(q.correctPairs).forEach(([left,right])=>{
-        if(String(answer[left]) === String(right)) correctCount++;
+      let matchedSets = 0;
+      (q.keywordRules || []).forEach(group => {
+        if (includesAny(text, group)) matchedSets++;
       });
-      return (correctCount / totalPairs) * q.points;
+      const score = Math.round((matchedSets / (q.keywordRules?.length || 1)) * q.maxPoints);
+      if ((q.minLength || 0) && text.length < q.minLength) return Math.max(0, score - 1);
+      return Math.min(q.maxPoints, score);
     }
 
-    function scoreKeywordOpen(q, answer){
-      const text = normalizeText(answer);
-      if(!text) return 0;
+    function scorePractical(q, answer) {
+      const text = safeText(answer).trim().toLowerCase();
+      if (!text) return 0;
       let score = 0;
-      if(text.length >= q.minLength) score += 0.5;
-      let hits = 0;
-      q.keywordRules.forEach(group=>{
-        const matched = group.some(token => text.includes(normalizeText(token)));
-        if(matched) hits++;
-      });
-      const ratio = hits / q.keywordRules.length;
-      if(q.maxPoints === 2){
-        if(ratio >= 0.34) score = Math.max(score,1);
-        if(ratio >= 0.67) score = 2;
-      } else {
-        score += ratio * (q.maxPoints - 0.5);
+
+      if (q.rules?.minItems) {
+        const items = text.split(/\n+/).map(x => x.trim()).filter(Boolean);
+        if (items.length >= q.rules.minItems) score += 1;
       }
-      return Math.min(q.maxPoints, roundHalf(score));
-    }
 
-    function scorePatternOpen(q, answer){
-      const text = (answer || '').trim();
-      if(!text) return 0;
-      const lines = text.split(/\n+/).map(v=>v.trim()).filter(Boolean);
-      let score = 0;
-      if(text.length >= q.minLength) score += 0.5;
-      if(lines.length >= 3) score += 1;
-      const starters = q.openQuestionStarters;
-      let matches = 0;
-      lines.forEach(line=>{
-        const low = normalizeText(line);
-        if(starters.some(s=>low.startsWith(s))) matches++;
-      });
-      if(matches >= 2) score += 1;
-      if(matches >= 3) score += 0.5;
-      return Math.min(q.maxPoints, roundHalf(score));
-    }
-
-    function scorePractical(q, answer){
-      const text = (answer || '').trim();
-      if(!text) return 0;
-      const low = normalizeText(text);
-      let score = 0;
-      if(text.length >= (q.minLength || 0)) score += 1;
-      if(q.practicalRules.minItems){
-        const lines = text.split(/\n+/).map(v=>v.trim()).filter(Boolean);
-        if(lines.length >= q.practicalRules.minItems) score += 1;
+      if (q.rules?.mustContainPattern) {
+        const ok = q.rules.mustContainPattern.every(p => text.includes(p));
+        if (ok) score += 1;
       }
-      if(q.practicalRules.mustContain){
-        const ok = q.practicalRules.mustContain.every(token=> low.includes(normalizeText(token)));
-        if(ok) score += 1;
+
+      if (q.rules?.mustCover) {
+        const covered = q.rules.mustCover.filter(k => text.includes(k)).length;
+        if (covered >= Math.ceil(q.rules.mustCover.length * 0.8)) score += 2;
+        else if (covered >= Math.ceil(q.rules.mustCover.length * 0.5)) score += 1;
       }
-      if(q.practicalRules.mustCover){
-        const coverHits = q.practicalRules.mustCover.filter(token=> low.includes(normalizeText(token))).length;
-        if(coverHits >= Math.ceil(q.practicalRules.mustCover.length * 0.8)) score += 1;
-        else if(coverHits >= Math.ceil(q.practicalRules.mustCover.length * 0.5)) score += 0.5;
+
+      if (q.rules?.keywords) {
+        const found = q.rules.keywords.filter(k => text.includes(k)).length;
+        if (found >= Math.ceil(q.rules.keywords.length * 0.5)) score += 1;
       }
-      if(q.practicalRules.keywords){
-        const keywordHits = q.practicalRules.keywords.filter(token=> low.includes(normalizeText(token))).length;
-        const ratio = keywordHits / q.practicalRules.keywords.length;
-        const bonus = q.maxPoints - score;
-        score += Math.max(0, Math.min(bonus, bonus * ratio));
-      }
-      return Math.min(q.maxPoints, roundHalf(score));
+
+      if ((q.minLength || 0) && text.length < q.minLength) score = Math.max(0, score - 1);
+      return Math.min(q.maxPoints, score);
     }
 
-    function roundHalf(num){
-      return Math.round(num * 2) / 2;
-    }
+    function calcScores() {
+      const raw = { total:0, GR1:0, GR2:0, GR3:0 };
+      const max = { total:0, GR1:0, GR2:0, GR3:0 };
 
-    function convertRawTo12(raw, max){
-      if(max <= 0) return 0;
-      const projected = (raw / max) * 12;
-      const rounded = Math.round(projected);
-      return Math.min(12, Math.max(1, rounded));
-    }
+      QUESTION_BANK.questions.forEach(q => {
+        const maxPoints = q.points || q.maxPoints || 0;
+        max.total += maxPoints;
+        q.groupResults.forEach(gr => max[gr] += maxPoints);
 
-    function convertTotalRawTo12(raw){
-      const match = APP_CONFIG.gradingScale.find(item=> raw >= item.min && raw <= item.max);
-      return match ? match.grade : 0;
-    }
-
-    function calculateIntegrity(){
-      const flags = [];
-      const shortAnswers = [];
-      QUESTION_BANK.filter(q=>['open','open_pattern','practical'].includes(q.type)).forEach(q=>{
-        const ans = (STATE.answers[q.id] || '').trim();
-        if(ans && ans.length < Math.max(25, (q.minLength || 0) * 0.35)) shortAnswers.push(q.id);
-      });
-      if(shortAnswers.length >= 3) flags.push('Короткі відкриті відповіді');
-      let riskLevel = 'low';
-      if(flags.length >= 2) riskLevel = 'medium';
-      if(flags.length >= 4) riskLevel = 'high';
-      STATE.integrity = {riskLevel, flags};
-    }
-
-    function calculateAllScores(){
-      const sums = {total:0,GR1:0,GR2:0,GR3:0};
-      QUESTION_BANK.forEach(q=>{
+        let s = 0;
         const ans = STATE.answers[q.id];
-        let score = 0;
-        if(q.type === 'mcq') score = scoreMCQ(q, ans);
-        if(q.type === 'matching') score = scoreMatching(q, ans);
-        if(q.type === 'open') score = scoreKeywordOpen(q, ans);
-        if(q.type === 'open_pattern') score = scorePatternOpen(q, ans);
-        if(q.type === 'practical') score = scorePractical(q, ans);
-        sums.total += score;
-        q.groupResults.forEach(gr => sums[gr] += score);
+        if (q.type === 'mcq') s = scoreMCQ(q, ans);
+        else if (q.type === 'matching') s = scoreMatching(q, ans);
+        else if (q.type === 'open') s = scoreOpen(q, ans);
+        else if (q.type === 'practical') s = scorePractical(q, ans);
+
+        raw.total += s;
+        q.groupResults.forEach(gr => raw[gr] += s);
       });
-      STATE.rawScores = {
-        total: roundHalf(sums.total),
-        GR1: roundHalf(sums.GR1),
-        GR2: roundHalf(sums.GR2),
-        GR3: roundHalf(sums.GR3)
+
+      const to12 = (r, m) => {
+        if (!m) return 0;
+        return Math.max(1, Math.min(12, Math.round((r / m) * 12)));
       };
-      STATE.grades12 = {
-        total: convertTotalRawTo12(STATE.rawScores.total),
-        GR1: convertRawTo12(STATE.rawScores.GR1, STATE.maxScores.GR1),
-        GR2: convertRawTo12(STATE.rawScores.GR2, STATE.maxScores.GR2),
-        GR3: convertRawTo12(STATE.rawScores.GR3, STATE.maxScores.GR3)
+
+      return {
+        rawTotal: round2(raw.total),
+        rawMax: max.total,
+        grade12: to12(raw.total, max.total),
+        GR1_raw: round2(raw.GR1),
+        GR1_max: max.GR1,
+        GR1_grade12: to12(raw.GR1, max.GR1),
+        GR2_raw: round2(raw.GR2),
+        GR2_max: max.GR2,
+        GR2_grade12: to12(raw.GR2, max.GR2),
+        GR3_raw: round2(raw.GR3),
+        GR3_max: max.GR3,
+        GR3_grade12: to12(raw.GR3, max.GR3)
       };
-      calculateIntegrity();
     }
 
-    function getResultComment(grade){
-      if(grade <= 3) return 'Потрібно ще попрацювати над правилами спілкування та аналізом повідомлень.';
-      if(grade <= 6) return 'Є базове розуміння теми, але варто краще попрацювати над прикладами та поясненнями.';
-      if(grade <= 9) return 'Хороший результат. Ви розумієте основні правила спілкування та вмієте аналізувати ситуації.';
+    function round2(n) {
+      return Math.round(n * 100) / 100;
+    }
+
+    function buildIntegrity() {
+      const flags = [];
+      QUESTION_BANK.questions.forEach(q => {
+        const a = STATE.answers[q.id];
+        if ((q.type === 'open' || q.type === 'practical') && safeText(a).trim().length > 0 && safeText(a).trim().length < 20) {
+          flags.push(`Надто коротка відповідь: ${q.id}`);
+        }
+      });
+      return {
+        riskLevel: flags.length ? 'medium' : 'low',
+        flags
+      };
+    }
+
+    function buildResultObject() {
+      const scores = calcScores();
+      const submittedAt = new Date().toISOString();
+      STATE.submittedAt = submittedAt;
+
+      return {
+        meta: {
+          subject: APP_CONFIG.subject,
+          grade: APP_CONFIG.grade,
+          semester: APP_CONFIG.semester,
+          topic: APP_CONFIG.topic,
+          repoName: APP_CONFIG.repoName,
+          domainName: APP_CONFIG.domainName
+        },
+        student: {
+          name: STATE.studentName,
+          class: STATE.studentClass
+        },
+        attempt: {
+          startedAt: STATE.startedAt,
+          submittedAt,
+          durationSec: APP_CONFIG.timeLimitMinutes * 60 - STATE.timerLeftSec,
+          attemptNumber: 1
+        },
+        scores,
+        integrity: buildIntegrity(),
+        answers: STATE.answers
+      };
+    }
+
+    function studentComment(grade) {
+      if (grade <= 3) return 'Потрібно ще попрацювати над правилами спілкування та аналізом повідомлень.';
+      if (grade <= 6) return 'Є базове розуміння теми, але варто краще попрацювати над прикладами та поясненнями.';
+      if (grade <= 9) return 'Хороший результат. Ви розумієте основні правила спілкування та вмієте аналізувати ситуації.';
       return 'Дуже хороший результат. Ви впевнено орієнтуєтеся в темі й демонструєте зріле розуміння культури спілкування.';
     }
 
-    function buildResultObject(){
-      const durationSec = Math.max(0, Math.round((new Date(STATE.submittedAt).getTime() - new Date(STATE.startedAt).getTime()) / 1000));
-      return {
-        meta:{
-          subject:APP_CONFIG.subject,
-          grade:APP_CONFIG.grade,
-          semester:APP_CONFIG.semester,
-          topic:APP_CONFIG.topic,
-          workId:APP_CONFIG.workId
-        },
-        student:{
-          name:STATE.studentName,
-          class:STATE.studentClass,
-          key:normalizeStudentKey(STATE.studentName, STATE.studentClass)
-        },
-        attempt:{
-          startedAt:STATE.startedAt,
-          submittedAt:STATE.submittedAt,
-          durationSec,
-          attemptNumber:1
-        },
-        scores:{
-          rawTotal:STATE.rawScores.total,
-          rawMax:STATE.maxScores.total,
-          grade12:STATE.grades12.total,
-          GR1_raw:STATE.rawScores.GR1,
-          GR1_max:STATE.maxScores.GR1,
-          GR1_grade12:STATE.grades12.GR1,
-          GR2_raw:STATE.rawScores.GR2,
-          GR2_max:STATE.maxScores.GR2,
-          GR2_grade12:STATE.grades12.GR2,
-          GR3_raw:STATE.rawScores.GR3,
-          GR3_max:STATE.maxScores.GR3,
-          GR3_grade12:STATE.grades12.GR3
-        },
-        integrity:STATE.integrity,
-        answers:STATE.answers,
-        transport:{
-          gasEndpoint:APP_CONFIG.gasEndpoint,
-          telegramEnabled:APP_CONFIG.sendTelegramReport
-        }
-      };
-    }
+    async function finalizeQuiz(auto = false) {
+      try {
+        const result = buildResultObject();
+        const res = await apiCall('submitResult', result);
 
-    function buildGasPayload(){
-      return {
-        action:'submitResult',
-        payload:STATE.resultObject
-      };
-    }
+        qs('screen-quiz').classList.add('hidden');
+        qs('screen-final').classList.remove('hidden');
 
-    async function fakeCheckAccess(){
-      await sleep(220);
-      if(STATE.accessCode !== APP_CONFIG.accessCodeDemo){
-        return {ok:false,status:'invalid_code',message:'Неправильний код доступу'};
-      }
-      return {ok:true,status:'allowed',message:'Доступ дозволено'};
-    }
-
-    async function fakeSubmitResult(){
-      await sleep(350);
-      return {ok:true,status:'saved',telegramSent:true,message:'Результат успішно збережено'};
-    }
-
-    function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
-
-    function saveProgressLocally(){
-      const data = {
-        app:APP_CONFIG.workId,
-        state:{...STATE, timerInterval:null, resultObject:null}
-      };
-      localStorage.setItem(APP_CONFIG.workId, JSON.stringify(data));
-      STATE.lastAutosaveAt = new Date().toISOString();
-      DOM.autosaveText.textContent = `Чернетку збережено: ${formatTimeOnly(STATE.lastAutosaveAt)}`;
-    }
-
-    function restoreProgress(){
-      const raw = localStorage.getItem(APP_CONFIG.workId);
-      if(!raw) return false;
-      try{
-        const parsed = JSON.parse(raw);
-        if(parsed?.app !== APP_CONFIG.workId) return false;
-        const stored = parsed.state || {};
-        Object.assign(STATE, stored);
-        DOM.studentName.value = STATE.studentName || '';
-        DOM.studentClass.value = STATE.studentClass || '';
-        DOM.accessCode.value = STATE.accessCode || '';
-        return true;
-      }catch(e){
-        return false;
+        const total = result.scores.grade12;
+        const msg = `
+          <h2>Роботу завершено</h2>
+          <p><strong>${STATE.studentName}</strong>, ваш загальний результат: <strong>${total} / 12</strong></p>
+          <p>${studentComment(total)}</p>
+          <p>${res.ok ? 'Результат прийнято та надіслано вчителю.' : 'Сталася помилка під час відправки результату.'}</p>
+        `;
+        qs('finalBox').innerHTML = msg;
+        qs('resultJson').textContent = JSON.stringify(result, null, 2);
+        clearInterval(STATE.intervalId);
+        saveState();
+      } catch (e) {
+        alert('Помилка завершення роботи: ' + e.message);
       }
     }
 
-    function resetDraft(){
-      localStorage.removeItem(APP_CONFIG.workId);
-      location.reload();
-    }
+    async function startFlow() {
+      const name = qs('studentName').value.trim();
+      const className = qs('studentClass').value.trim();
+      const code = qs('accessCode').value.trim();
+      const err = qs('startError');
+      err.classList.add('hidden');
+      err.textContent = '';
 
-    function startTimer(){
-      clearInterval(STATE.timerInterval);
-      updateTimerUI();
-      STATE.timerInterval = setInterval(()=>{
-        STATE.timerLeftSec--;
-        if(STATE.timerLeftSec <= 0){
-          STATE.timerLeftSec = 0;
-          updateTimerUI();
-          clearInterval(STATE.timerInterval);
-          handleSubmit(true);
+      if (!name || !className || !code) {
+        err.textContent = 'Заповніть усі поля.';
+        err.classList.remove('hidden');
+        return;
+      }
+
+      try {
+        const response = await apiCall('checkAccess', {
+          studentName: name,
+          studentClass: className,
+          accessCode: code
+        });
+
+        if (!response.ok) {
+          err.textContent = response.message || 'Доступ заборонено.';
+          err.classList.remove('hidden');
           return;
         }
-        updateTimerUI();
-        if(STATE.timerLeftSec % 15 === 0) saveProgressLocally();
-      },1000);
-    }
 
-    function updateTimerUI(){
-      const mm = String(Math.floor(STATE.timerLeftSec/60)).padStart(2,'0');
-      const ss = String(STATE.timerLeftSec%60).padStart(2,'0');
-      DOM.timerLabel.textContent = `${mm}:${ss}`;
-      DOM.timerLabel.classList.remove('warn','danger');
-      if(STATE.timerLeftSec <= 300) DOM.timerLabel.classList.add('danger');
-      else if(STATE.timerLeftSec <= 600) DOM.timerLabel.classList.add('warn');
-    }
+        STATE.studentName = name;
+        STATE.studentClass = className;
+        STATE.accessCode = code;
+        STATE.startedAt = new Date().toISOString();
 
-    function formatDuration(sec){
-      const m = Math.floor(sec/60);
-      const s = sec%60;
-      return `${m} хв ${String(s).padStart(2,'0')} с`;
-    }
+        saveState();
+        qs('studentInfo').textContent = `${name} · ${className}`;
+        qs('screen-start').classList.add('hidden');
+        qs('screen-quiz').classList.remove('hidden');
 
-    function formatTimeOnly(iso){
-      try{
-        const d = new Date(iso);
-        return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-      }catch(e){return '—';}
-    }
-
-    async function handleStart(){
-      const name = DOM.studentName.value.trim();
-      const className = DOM.studentClass.value.trim();
-      const code = DOM.accessCode.value.trim();
-      if(!name || !className || !code){
-        DOM.startMessage.innerHTML = '<span style="color:var(--red)">Заповніть усі поля перед початком роботи.</span>';
-        return;
-      }
-      STATE.studentName = name;
-      STATE.studentClass = className;
-      STATE.accessCode = code;
-      DOM.startMessage.textContent = 'Перевірка доступу...';
-      const access = await fakeCheckAccess();
-      if(!access.ok){
-        DOM.startMessage.innerHTML = `<span style="color:var(--red)">${access.message}</span>`;
-        return;
-      }
-      if(!STATE.startedAt) STATE.startedAt = new Date().toISOString();
-      calculateMaxScores();
-      saveProgressLocally();
-      showScreen('quiz');
-      renderCurrentQuestion();
-      startTimer();
-    }
-
-    function moveQuestion(step){
-      collectCurrentAnswer();
-      saveProgressLocally();
-      STATE.currentIndex = Math.max(0, Math.min(QUESTION_BANK.length - 1, STATE.currentIndex + step));
-      renderCurrentQuestion();
-    }
-
-    async function handleSubmit(auto=false){
-      collectCurrentAnswer();
-      clearInterval(STATE.timerInterval);
-      STATE.submittedAt = new Date().toISOString();
-      calculateAllScores();
-      STATE.resultObject = buildResultObject();
-      const response = await fakeSubmitResult();
-      STATE.submissionStatus = response.status;
-      saveProgressLocally();
-      renderResult(response, auto);
-      showScreen('result');
-    }
-
-    function renderResult(response, auto){
-      DOM.resultTitle.textContent = auto ? 'Час вичерпано. Роботу завершено автоматично.' : 'Роботу завершено';
-      DOM.finalGrade.textContent = STATE.grades12.total;
-      DOM.resultComment.textContent = getResultComment(STATE.grades12.total);
-      DOM.rawScoreBox.textContent = `${STATE.rawScores.total} / ${STATE.maxScores.total}`;
-      const durationSec = Math.max(0, Math.round((new Date(STATE.submittedAt).getTime() - new Date(STATE.startedAt).getTime()) / 1000));
-      DOM.durationBox.textContent = formatDuration(durationSec);
-      DOM.submitStatusBox.innerHTML = response.ok ? `<span class="success">${response.status}</span>` : response.status;
-      DOM.resultJsonPreview.value = JSON.stringify(buildGasPayload(), null, 2);
-    }
-
-    function init(){
-      calculateMaxScores();
-      DOM.startBtn.addEventListener('click', handleStart);
-      DOM.restoreBtn.addEventListener('click', ()=>{
-        const ok = restoreProgress();
-        DOM.startMessage.innerHTML = ok ? '<span style="color:var(--green)">Чернетку знайдено. Натисніть «Почати роботу» для продовження.</span>' : '<span style="color:var(--red)">Чернетку не знайдено.</span>';
-      });
-      DOM.resetDraftBtn.addEventListener('click', resetDraft);
-      DOM.prevBtn.addEventListener('click', ()=>moveQuestion(-1));
-      DOM.nextBtn.addEventListener('click', ()=>moveQuestion(1));
-      DOM.saveBtn.addEventListener('click', ()=>{collectCurrentAnswer();saveProgressLocally();});
-      DOM.submitBtn.addEventListener('click', ()=>handleSubmit(false));
-      DOM.copyJsonBtn.addEventListener('click', async ()=>{
-        await navigator.clipboard.writeText(DOM.resultJsonPreview.value);
-        DOM.copyJsonBtn.textContent = 'Скопійовано';
-        setTimeout(()=>DOM.copyJsonBtn.textContent='Скопіювати JSON',1200);
-      });
-      DOM.restartBtn.addEventListener('click', ()=>{localStorage.removeItem(APP_CONFIG.workId);location.reload();});
-      restoreProgress();
-      if(STATE.startedAt && !STATE.submittedAt && Object.keys(STATE.answers).length){
-        DOM.startMessage.innerHTML = '<span style="color:var(--green)">Знайдено незавершену сесію. Натисніть «Почати роботу» для продовження.</span>';
+        renderQuiz();
+        updateProgress();
+        startTimer();
+      } catch (e) {
+        err.textContent = 'Не вдалося підключитися до сервера: ' + e.message;
+        err.classList.remove('hidden');
       }
     }
 
-    init();
+    qs('startBtn').addEventListener('click', startFlow);
+    qs('saveBtn').addEventListener('click', () => {
+      saveState();
+      alert('Проміжний прогрес збережено локально.');
+    });
+    qs('submitBtn').addEventListener('click', () => {
+      if (confirm('Завершити роботу? Після цього результат буде надіслано.')) finalizeQuiz(false);
+    });
+
+    restoreState();
+
+    // Не відновлюємо автоматично проходження, щоб не ускладнювати запуск;
+    // але дані лишаються в localStorage як резерв.
   </script>
 </body>
 </html>
