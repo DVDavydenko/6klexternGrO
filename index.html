@@ -104,7 +104,7 @@
       </div>
       <div id="startError" class="warn hidden" style="margin-top:14px;"></div>
       <div class="footer-actions">
-        <span class="muted">Репозиторій: <strong>6klexternGrO</strong> · Домен: <strong>6klexternGrO.dvdavydenko.space</strong></span>
+        <span class="muted">Перед початком перевірте правильність ПІБ, класу та коду доступу.</span>
         <button class="btn" id="startBtn">Почати роботу</button>
       </div>
     </section>
@@ -137,8 +137,7 @@
 
     <section id="screen-final" class="card hidden">
       <div id="finalBox" class="ok"></div>
-      <h3>Службовий пакет результату</h3>
-      <pre id="resultJson"></pre>
+
     </section>
   </div>
 
@@ -222,14 +221,39 @@
       return `${safeText(name).toLowerCase().trim().replace(/\s+/g,' ')}::${safeText(className).toLowerCase().trim().replace(/\s+/g,' ')}`;
     }
 
-    async function apiCall(action, payload) {
-      const response = await fetch(APP_CONFIG.gasEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action, payload })
+    function apiCall(action, payload) {
+      return new Promise((resolve, reject) => {
+        const callbackName = 'gasCallback_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+        const script = document.createElement('script');
+        const timeout = setTimeout(() => {
+          cleanup();
+          reject(new Error('Сервер не відповів протягом 20 секунд'));
+        }, 20000);
+
+        function cleanup() {
+          clearTimeout(timeout);
+          if (script.parentNode) script.parentNode.removeChild(script);
+          try { delete window[callbackName]; } catch (e) { window[callbackName] = undefined; }
+        }
+
+        window[callbackName] = (data) => {
+          cleanup();
+          resolve(data);
+        };
+
+        const params = new URLSearchParams();
+        params.set('action', action);
+        params.set('payload', JSON.stringify(payload || {}));
+        params.set('callback', callbackName);
+
+        script.onerror = () => {
+          cleanup();
+          reject(new Error('Не вдалося завантажити відповідь сервера'));
+        };
+
+        script.src = APP_CONFIG.gasEndpoint + '?' + params.toString();
+        document.body.appendChild(script);
       });
-      if (!response.ok) throw new Error('HTTP ' + response.status);
-      return await response.json();
     }
 
     function shuffle(arr) {
@@ -524,10 +548,10 @@
           <h2>Роботу завершено</h2>
           <p><strong>${STATE.studentName}</strong>, ваш загальний результат: <strong>${total} / 12</strong></p>
           <p>${studentComment(total)}</p>
-          <p>${res.ok ? 'Результат прийнято та надіслано вчителю.' : 'Сталася помилка під час відправки результату.'}</p>
+          <p>${res.ok ? (res.telegramSent === false ? 'Результат прийнято. Звіт для вчителя тимчасово не відправлено автоматично.' : 'Результат прийнято та надіслано вчителю.') : 'Сталася помилка під час відправки результату.'}</p>
         `;
         qs('finalBox').innerHTML = msg;
-        qs('resultJson').textContent = JSON.stringify(result, null, 2);
+
         clearInterval(STATE.intervalId);
         saveState();
       } catch (e) {
